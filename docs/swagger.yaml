@@ -1,0 +1,114 @@
+basePath: /v1
+definitions:
+  entity.Product:
+    properties:
+      category_id:
+        example: 01F8Z4P8KQ4P7CSHMSZETEATWX
+        type: string
+      created_at:
+        type: string
+      description:
+        example: MacBook Pro 9999
+        type: string
+      id:
+        example: 01HV73P3B06PTPXEMYCCBMM03C
+        type: string
+      name:
+        example: Laptop
+        type: string
+      unit_price:
+        example: 99.9
+        type: number
+      updated_at:
+        type: string
+    type: object
+  v1.addProductRequest:
+    properties:
+      category_id:
+        example: 01F8Z4P8KQ4P7CSHMSZETEATWX
+        type: string
+      description:
+        example: MacBook Pro 9999
+        type: string
+      name:
+        example: Laptop
+        type: string
+      unit_price:
+        example: 99.9
+        type: number
+    type: object
+  v1.response:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Using a translation service as an example
+  title: Go Clean Template API
+  version: "1.0"
+paths:
+  /product/add-product:
+    post:
+      consumes:
+      - application/json
+      description: Add a product to inventory
+      operationId: add-product
+      parameters:
+      - description: Enter product details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/v1.addProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Product
+      tags:
+      - product
+  /product/get-product:
+    get:
+      consumes:
+      - application/json
+      description: Get one product details from inventory
+      operationId: get-product
+      parameters:
+      - description: Product ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Product
+      tags:
+      - product
+swagger: "2.0"
